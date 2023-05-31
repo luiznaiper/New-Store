@@ -1,5 +1,7 @@
+import Layout from '../../Components/Layout'
+
 const SignIn = () => {
-  return <div>SignIn</div>
+  return <Layout>Sign In</Layout>
 }
 
 export default SignIn
