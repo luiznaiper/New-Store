@@ -1,8 +1,24 @@
-import { createContext, useState } from 'react'
+import { ReactNode, createContext, useState } from 'react'
 
-export const ShoppingCartContext = createContext()
+interface ShoppingCartProviderProps {
+  children: ReactNode
+}
 
-export const ShoppingCartProvider = ({ children }) => {
+interface ShoppingCartContextType {
+  count: number
+  setCount: React.Dispatch<React.SetStateAction<number>>
+}
+
+export const ShoppingCartContext = createContext<ShoppingCartContextType>({
+  count: 0,
+  setCount: () => {
+    //placeholder function
+  },
+})
+
+export const ShoppingCartProvider: React.FC<ShoppingCartProviderProps> = ({
+  children,
+}) => {
   const [count, setCount] = useState(0)
 
   return (
