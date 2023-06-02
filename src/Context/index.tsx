@@ -1,4 +1,5 @@
 import { ReactNode, createContext, useState } from 'react'
+import { CardProps } from '../Components/Card'
 
 interface ShoppingCartProviderProps {
   children: ReactNode
@@ -10,6 +11,8 @@ interface ShoppingCartContextType {
   isProductDetailOpen: boolean
   openProductDetail: () => void
   closeProductDetail: () => void
+  productToShow: CardProps['data'] | null | object
+  setProductToShow: React.Dispatch<React.SetStateAction<object>>
 }
 
 export const ShoppingCartContext = createContext<ShoppingCartContextType>({
@@ -25,6 +28,10 @@ export const ShoppingCartContext = createContext<ShoppingCartContextType>({
   closeProductDetail: () => {
     //placeholder function
   },
+  productToShow: {},
+  setProductToShow: () => {
+    //placeholder function
+  },
 })
 
 export const ShoppingCartProvider: React.FC<ShoppingCartProviderProps> = ({
@@ -32,6 +39,7 @@ export const ShoppingCartProvider: React.FC<ShoppingCartProviderProps> = ({
 }) => {
   const [count, setCount] = useState(0)
   const [isProductDetailOpen, setIsProductDetailOpen] = useState(false)
+  const [productToShow, setProductToShow] = useState({})
 
   const openProductDetail = () => {
     setIsProductDetailOpen(true)
@@ -40,7 +48,6 @@ export const ShoppingCartProvider: React.FC<ShoppingCartProviderProps> = ({
   const closeProductDetail = () => {
     setIsProductDetailOpen(false)
   }
-  console.log(isProductDetailOpen)
 
   return (
     <ShoppingCartContext.Provider
@@ -50,6 +57,8 @@ export const ShoppingCartProvider: React.FC<ShoppingCartProviderProps> = ({
         isProductDetailOpen,
         openProductDetail,
         closeProductDetail,
+        productToShow,
+        setProductToShow,
       }}
     >
       {children}

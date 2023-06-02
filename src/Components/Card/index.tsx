@@ -1,7 +1,7 @@
 import { PlusIcon } from '@heroicons/react/20/solid'
 import { useShoppingCart } from '../../hooks/useShoppingCart'
 
-interface CardProps {
+export interface CardProps {
   data: {
     title: string
     price: number
@@ -9,16 +9,22 @@ interface CardProps {
     category: {
       name: string
     }
+    description: string
   }
 }
 
 const Card: React.FC<CardProps> = ({ data }) => {
-  const { count, setCount, openProductDetail } = useShoppingCart()
   const { title, price, images, category } = data
+  const { count, setCount, openProductDetail, setProductToShow } =
+    useShoppingCart()
+  const showProduct = (productDetail: CardProps['data']) => {
+    openProductDetail()
+    setProductToShow(productDetail)
+  }
   return (
     <div
       className="bg-white cursor-pointer w-56 h-60 rounded-lg"
-      onClick={() => openProductDetail()}
+      onClick={() => showProduct(data)}
     >
       <figure className="relative mb-2 w-full h-4/5">
         <span className="absolute bottom-0 left-0 bg-white/60 rounded-lg text-black text-xs m-2 px-3 py-0.5">
