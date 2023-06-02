@@ -1,3 +1,4 @@
+import { PlusIcon } from '@heroicons/react/20/solid'
 import { useShoppingCart } from '../../hooks/useShoppingCart'
 
 interface CardProps {
@@ -26,10 +27,10 @@ const Card: React.FC<CardProps> = ({ data }) => {
           alt={title}
         />
         <div
-          className="absolute top-0 right-0 flex justify-center items-center bg-white w-6 h-6 rounded-full m-2 p-1 pb-1.5"
+          className="absolute top-0 right-0 flex justify-center items-center bg-white w-6 h-6 rounded-full m-2 p-1"
           onClick={() => setCount(count + 1)}
         >
-          +
+          <PlusIcon className="w-6 h-6 text-black" />
         </div>
       </figure>
       <p className="flex justify-between">

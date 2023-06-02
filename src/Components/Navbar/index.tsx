@@ -1,5 +1,6 @@
 import { NavLink } from 'react-router-dom'
 import { useShoppingCart } from '../../hooks/useShoppingCart'
+import { ShoppingBagIcon } from '@heroicons/react/20/solid'
 
 const NavBar = () => {
   const { count } = useShoppingCart()
@@ -103,7 +104,10 @@ const NavBar = () => {
             Sign In
           </NavLink>
         </li>
-        <li>🛒 {count}</li>
+        <li className="flex items-center">
+          <ShoppingBagIcon className="w-6 h-6 text-black" />{' '}
+          <span>{count}</span>
+        </li>
       </ul>
     </nav>
   )
