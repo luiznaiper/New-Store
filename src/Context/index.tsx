@@ -36,6 +36,7 @@ export const ShoppingCartContext = createContext<ShoppingCartContextType>({
     undefined
   },
   productToShow: {
+    id: 0,
     title: '',
     price: 0,
     images: [],
