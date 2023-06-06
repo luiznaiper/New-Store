@@ -1,14 +1,10 @@
 import { XMarkIcon } from '@heroicons/react/20/solid'
 import './styles.css'
 import { useShoppingCart } from '../../hooks/useShoppingCart'
-import { CardProps } from '../Card'
+import OrderCard from '../OrderCard'
 
 const CheckoutSideMenu = () => {
-  const { isSideMenuOpen, closeSideMenu, productToShow } = useShoppingCart()
-
-  const data = productToShow as CardProps['data'] | null
-
-  //   const { images = [], price = 0, title = '', description = '' } = data || {}
+  const { isSideMenuOpen, closeSideMenu, cartProducts } = useShoppingCart()
 
   return (
     <aside
@@ -22,6 +18,14 @@ const CheckoutSideMenu = () => {
         <div onClick={() => closeSideMenu()}>
           <XMarkIcon className="h-6 w-6 text-black cursor-pointer" />
         </div>
+      </div>
+      <div className="px-6">
+        {cartProducts.map((product) => {
+          const { id, images, price, title } = product
+          return (
+            <OrderCard key={id} images={images} price={price} title={title} />
+          )
+        })}
       </div>
     </aside>
   )

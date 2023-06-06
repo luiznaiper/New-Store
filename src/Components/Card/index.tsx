@@ -3,6 +3,7 @@ import { useShoppingCart } from '../../hooks/useShoppingCart'
 
 export interface CardProps {
   data: {
+    id: number
     title: string
     price: number
     images: string[]
@@ -39,7 +40,6 @@ const Card: React.FC<CardProps> = ({ data }) => {
     setCount(count + 1)
     openSideMenu()
     closeProductDetail()
-    console.log('CART: ', cartProducts)
   }
 
   return (
