@@ -19,18 +19,26 @@ const Card: React.FC<CardProps> = ({ data }) => {
     count,
     setCount,
     openProductDetail,
+    closeProductDetail,
     setProductToShow,
     cartProducts,
     setCartProducts,
+    openSideMenu,
   } = useShoppingCart()
   const showProduct = (productDetail: CardProps['data']) => {
     openProductDetail()
     setProductToShow(productDetail)
   }
 
-  const addProductsToCart = (productData: CardProps['data']): void => {
+  const addProductsToCart = (
+    event: React.MouseEvent,
+    productData: CardProps['data']
+  ): void => {
+    event.stopPropagation()
     setCartProducts([...cartProducts, productData])
     setCount(count + 1)
+    openSideMenu()
+    closeProductDetail()
     console.log('CART: ', cartProducts)
   }
 
@@ -50,7 +58,7 @@ const Card: React.FC<CardProps> = ({ data }) => {
         />
         <div
           className="absolute top-0 right-0 flex justify-center items-center bg-white w-6 h-6 rounded-full m-2 p-1"
-          onClick={() => addProductsToCart(data)}
+          onClick={(event) => addProductsToCart(event, data)}
         >
           <PlusIcon className="w-6 h-6 text-black" />
         </div>

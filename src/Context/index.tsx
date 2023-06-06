@@ -17,20 +17,23 @@ interface ShoppingCartContextType {
   >
   cartProducts: Array<CardProps['data']>
   setCartProducts: React.Dispatch<React.SetStateAction<CardProps['data'][]>>
+  isSideMenuOpen: boolean
+  openSideMenu: () => void
+  closeSideMenu: () => void
 }
 
 export const ShoppingCartContext = createContext<ShoppingCartContextType>({
   count: 0,
   setCount: () => {
-    //placeholder function
+    undefined
   },
   isProductDetailOpen: false,
 
   openProductDetail: () => {
-    //placeholder function
+    undefined
   },
   closeProductDetail: () => {
-    //placeholder function
+    undefined
   },
   productToShow: {
     title: '',
@@ -42,11 +45,18 @@ export const ShoppingCartContext = createContext<ShoppingCartContextType>({
     description: '',
   },
   setProductToShow: () => {
-    //placeholder function
+    undefined
   },
   cartProducts: [],
   setCartProducts: () => {
-    //placeholder function
+    undefined
+  },
+  isSideMenuOpen: false,
+  openSideMenu: () => {
+    undefined
+  },
+  closeSideMenu: () => {
+    undefined
   },
 })
 
@@ -59,6 +69,7 @@ export const ShoppingCartProvider: React.FC<ShoppingCartProviderProps> = ({
     null
   )
   const [cartProducts, setCartProducts] = useState<CardProps['data'][]>([])
+  const [isSideMenuOpen, setIsSideMenuOpen] = useState(false)
 
   const openProductDetail = () => {
     setIsProductDetailOpen(true)
@@ -66,6 +77,14 @@ export const ShoppingCartProvider: React.FC<ShoppingCartProviderProps> = ({
 
   const closeProductDetail = () => {
     setIsProductDetailOpen(false)
+  }
+
+  const openSideMenu = () => {
+    setIsSideMenuOpen(true)
+  }
+
+  const closeSideMenu = () => {
+    setIsSideMenuOpen(false)
   }
 
   return (
@@ -80,6 +99,9 @@ export const ShoppingCartProvider: React.FC<ShoppingCartProviderProps> = ({
         setProductToShow,
         cartProducts,
         setCartProducts,
+        isSideMenuOpen,
+        openSideMenu,
+        closeSideMenu,
       }}
     >
       {children}
