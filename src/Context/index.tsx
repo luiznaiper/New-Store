@@ -11,8 +11,12 @@ interface ShoppingCartContextType {
   isProductDetailOpen: boolean
   openProductDetail: () => void
   closeProductDetail: () => void
-  productToShow: CardProps['data'] | null | object
-  setProductToShow: React.Dispatch<React.SetStateAction<object>>
+  productToShow: CardProps['data'] | null
+  setProductToShow: React.Dispatch<
+    React.SetStateAction<CardProps['data'] | null>
+  >
+  cartProducts: Array<CardProps['data']>
+  setCartProducts: React.Dispatch<React.SetStateAction<CardProps['data'][]>>
 }
 
 export const ShoppingCartContext = createContext<ShoppingCartContextType>({
@@ -28,8 +32,20 @@ export const ShoppingCartContext = createContext<ShoppingCartContextType>({
   closeProductDetail: () => {
     //placeholder function
   },
-  productToShow: {},
+  productToShow: {
+    title: '',
+    price: 0,
+    images: [],
+    category: {
+      name: '',
+    },
+    description: '',
+  },
   setProductToShow: () => {
+    //placeholder function
+  },
+  cartProducts: [],
+  setCartProducts: () => {
     //placeholder function
   },
 })
@@ -39,7 +55,10 @@ export const ShoppingCartProvider: React.FC<ShoppingCartProviderProps> = ({
 }) => {
   const [count, setCount] = useState(0)
   const [isProductDetailOpen, setIsProductDetailOpen] = useState(false)
-  const [productToShow, setProductToShow] = useState({})
+  const [productToShow, setProductToShow] = useState<CardProps['data'] | null>(
+    null
+  )
+  const [cartProducts, setCartProducts] = useState<CardProps['data'][]>([])
 
   const openProductDetail = () => {
     setIsProductDetailOpen(true)
@@ -59,6 +78,8 @@ export const ShoppingCartProvider: React.FC<ShoppingCartProviderProps> = ({
         closeProductDetail,
         productToShow,
         setProductToShow,
+        cartProducts,
+        setCartProducts,
       }}
     >
       {children}

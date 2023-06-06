@@ -15,12 +15,25 @@ export interface CardProps {
 
 const Card: React.FC<CardProps> = ({ data }) => {
   const { title, price, images, category } = data
-  const { count, setCount, openProductDetail, setProductToShow } =
-    useShoppingCart()
+  const {
+    count,
+    setCount,
+    openProductDetail,
+    setProductToShow,
+    cartProducts,
+    setCartProducts,
+  } = useShoppingCart()
   const showProduct = (productDetail: CardProps['data']) => {
     openProductDetail()
     setProductToShow(productDetail)
   }
+
+  const addProductsToCart = (productData: CardProps['data']): void => {
+    setCartProducts([...cartProducts, productData])
+    setCount(count + 1)
+    console.log('CART: ', cartProducts)
+  }
+
   return (
     <div
       className="bg-white cursor-pointer w-56 h-60 rounded-lg"
@@ -37,7 +50,7 @@ const Card: React.FC<CardProps> = ({ data }) => {
         />
         <div
           className="absolute top-0 right-0 flex justify-center items-center bg-white w-6 h-6 rounded-full m-2 p-1"
-          onClick={() => setCount(count + 1)}
+          onClick={() => addProductsToCart(data)}
         >
           <PlusIcon className="w-6 h-6 text-black" />
         </div>
