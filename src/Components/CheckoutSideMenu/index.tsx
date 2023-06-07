@@ -4,7 +4,14 @@ import { useShoppingCart } from '../../hooks/useShoppingCart'
 import OrderCard from '../OrderCard'
 
 const CheckoutSideMenu = () => {
-  const { isSideMenuOpen, closeSideMenu, cartProducts } = useShoppingCart()
+  const { isSideMenuOpen, closeSideMenu, cartProducts, setCartProducts } =
+    useShoppingCart()
+
+  const handleDelete = (id: number) => {
+    const filteredProducts = cartProducts.filter((product) => product.id !== id)
+
+    setCartProducts(filteredProducts)
+  }
 
   return (
     <aside
@@ -23,7 +30,14 @@ const CheckoutSideMenu = () => {
         {cartProducts.map((product) => {
           const { id, images, price, title } = product
           return (
-            <OrderCard key={id} images={images} price={price} title={title} />
+            <OrderCard
+              key={id}
+              id={id}
+              images={images}
+              price={price}
+              title={title}
+              handleDelete={handleDelete}
+            />
           )
         })}
       </div>

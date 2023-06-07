@@ -1,12 +1,20 @@
 import { XMarkIcon } from '@heroicons/react/20/solid'
 
 interface OrderCardProps {
+  id: number
   title: string
   images: string[]
   price: number
+  handleDelete: (id: number) => void
 }
 
-const OrderCard: React.FC<OrderCardProps> = ({ title, images, price }) => {
+const OrderCard: React.FC<OrderCardProps> = ({
+  id,
+  title,
+  images,
+  price,
+  handleDelete,
+}) => {
   return (
     <div className="flex justify-between items-center mb-3">
       <div className="flex items-center gap-2">
@@ -21,7 +29,10 @@ const OrderCard: React.FC<OrderCardProps> = ({ title, images, price }) => {
       </div>
       <div className="flex items-center gap-2">
         <p className="text-lg font-medium">{price}</p>
-        <XMarkIcon className="h-6 w-6 text-black cursor-pointer" />
+        <XMarkIcon
+          className="h-6 w-6 text-black cursor-pointer"
+          onClick={() => handleDelete(id)}
+        />
       </div>
     </div>
   )
