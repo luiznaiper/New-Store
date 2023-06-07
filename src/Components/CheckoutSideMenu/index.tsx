@@ -19,7 +19,7 @@ const CheckoutSideMenu = () => {
           <XMarkIcon className="h-6 w-6 text-black cursor-pointer" />
         </div>
       </div>
-      <div className="px-6">
+      <div className="px-6 overflow-y-scroll">
         {cartProducts.map((product) => {
           const { id, images, price, title } = product
           return (

@@ -1,4 +1,4 @@
-import { PlusIcon } from '@heroicons/react/20/solid'
+import { CheckIcon, PlusIcon } from '@heroicons/react/20/solid'
 import { useShoppingCart } from '../../hooks/useShoppingCart'
 
 export interface CardProps {
@@ -15,7 +15,7 @@ export interface CardProps {
 }
 
 const Card: React.FC<CardProps> = ({ data }) => {
-  const { title, price, images, category } = data
+  const { id, title, price, images, category } = data
   const {
     count,
     setCount,
@@ -42,6 +42,27 @@ const Card: React.FC<CardProps> = ({ data }) => {
     closeProductDetail()
   }
 
+  const renderIcon = (id: number) => {
+    const isInCart =
+      cartProducts.filter((product) => product.id === id).length > 0
+    if (isInCart) {
+      return (
+        <div className="absolute top-0 right-0 flex justify-center items-center w-6 h-6 rounded-full m-2 p-1  bg-lime-600">
+          <CheckIcon className="w-6 h-6 text-white " />
+        </div>
+      )
+    } else {
+      return (
+        <div
+          className="absolute top-0 right-0 flex justify-center items-center bg-white w-6 h-6 rounded-full m-2 p-1"
+          onClick={(event) => addProductsToCart(event, data)}
+        >
+          <PlusIcon className="w-6 h-6 text-black" />
+        </div>
+      )
+    }
+  }
+
   return (
     <div
       className="bg-white cursor-pointer w-56 h-60 rounded-lg"
@@ -56,12 +77,7 @@ const Card: React.FC<CardProps> = ({ data }) => {
           src={images[0]}
           alt={title}
         />
-        <div
-          className="absolute top-0 right-0 flex justify-center items-center bg-white w-6 h-6 rounded-full m-2 p-1"
-          onClick={(event) => addProductsToCart(event, data)}
-        >
-          <PlusIcon className="w-6 h-6 text-black" />
-        </div>
+        {renderIcon(id)}
       </figure>
       <p className="flex justify-between">
         <span className="text-sm font-light">{title}</span>
