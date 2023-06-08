@@ -3,10 +3,10 @@ export interface ProductData {
   title: string
   price: number
   images: string[]
-  category: {
+  category?: {
     name: string
   }
-  description: string
+  description?: string
 }
 
 export interface CardProps {

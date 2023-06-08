@@ -14,8 +14,6 @@ const CheckoutSideMenu = () => {
     setCartProducts(filteredProducts)
   }
 
-  console.log(totalPrice(cartProducts))
-
   return (
     <aside
       className={`${
@@ -43,6 +41,14 @@ const CheckoutSideMenu = () => {
             />
           )
         })}
+      </div>
+      <div className="px-6 mt-5">
+        <p className="flex justify-between items-center">
+          <span className="font-light">Total:</span>
+          <span className="font-medium text-2xl">
+            ${totalPrice(cartProducts)}
+          </span>
+        </p>
       </div>
     </aside>
   )
