@@ -1,7 +1,7 @@
 import { XMarkIcon } from '@heroicons/react/20/solid'
 import './styles.css'
 import { useShoppingCart } from '../../hooks/useShoppingCart'
-import { CardProps } from '../Card'
+import { CardProps } from '../../utils/types'
 
 const ProductDetail = () => {
   const { isProductDetailOpen, closeProductDetail, productToShow } =

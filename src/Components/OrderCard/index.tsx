@@ -1,12 +1,5 @@
 import { XMarkIcon } from '@heroicons/react/20/solid'
-
-interface OrderCardProps {
-  id: number
-  title: string
-  images: string[]
-  price: number
-  handleDelete: (id: number) => void
-}
+import { OrderCardProps } from '../../utils/types'
 
 const OrderCard: React.FC<OrderCardProps> = ({
   id,

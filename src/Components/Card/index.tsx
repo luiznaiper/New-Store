@@ -1,18 +1,6 @@
 import { CheckIcon, PlusIcon } from '@heroicons/react/20/solid'
 import { useShoppingCart } from '../../hooks/useShoppingCart'
-
-export interface CardProps {
-  data: {
-    id: number
-    title: string
-    price: number
-    images: string[]
-    category: {
-      name: string
-    }
-    description: string
-  }
-}
+import { CardProps } from '../../utils/types'
 
 const Card: React.FC<CardProps> = ({ data }) => {
   const { id, title, price, images, category } = data

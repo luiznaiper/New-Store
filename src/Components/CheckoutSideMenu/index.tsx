@@ -2,6 +2,7 @@ import { XMarkIcon } from '@heroicons/react/20/solid'
 import './styles.css'
 import { useShoppingCart } from '../../hooks/useShoppingCart'
 import OrderCard from '../OrderCard'
+import { totalPrice } from '../../utils/functions'
 
 const CheckoutSideMenu = () => {
   const { isSideMenuOpen, closeSideMenu, cartProducts, setCartProducts } =
@@ -12,6 +13,8 @@ const CheckoutSideMenu = () => {
 
     setCartProducts(filteredProducts)
   }
+
+  console.log(totalPrice(cartProducts))
 
   return (
     <aside

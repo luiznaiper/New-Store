@@ -1,11 +1,11 @@
 import { ReactNode, createContext, useState } from 'react'
-import { CardProps } from '../Components/Card'
+import { CardProps } from '../utils/types'
 
-interface ShoppingCartProviderProps {
+type ShoppingCartProviderProps = {
   children: ReactNode
 }
 
-interface ShoppingCartContextType {
+type ShoppingCartContextType = {
   count: number
   setCount: React.Dispatch<React.SetStateAction<number>>
   isProductDetailOpen: boolean
