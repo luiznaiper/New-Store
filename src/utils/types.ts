@@ -16,3 +16,10 @@ export interface CardProps {
 export interface OrderCardProps extends ProductData {
   handleDelete: (id: number) => void
 }
+
+export interface Order {
+  date: number
+  products: ProductData[]
+  totalProducts: number
+  totalPrice: number
+}

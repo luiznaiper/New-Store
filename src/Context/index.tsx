@@ -1,5 +1,5 @@
 import { ReactNode, createContext, useState } from 'react'
-import { CardProps } from '../utils/types'
+import { Order, ProductData } from '../utils/types'
 
 type ShoppingCartProviderProps = {
   children: ReactNode
@@ -11,13 +11,13 @@ type ShoppingCartContextType = {
   isProductDetailOpen: boolean
   openProductDetail: () => void
   closeProductDetail: () => void
-  productToShow: CardProps['data'] | null
-  setProductToShow: React.Dispatch<
-    React.SetStateAction<CardProps['data'] | null>
-  >
-  cartProducts: Array<CardProps['data']>
-  setCartProducts: React.Dispatch<React.SetStateAction<CardProps['data'][]>>
+  productToShow: ProductData | null
+  setProductToShow: React.Dispatch<React.SetStateAction<ProductData | null>>
+  cartProducts: Array<ProductData>
+  setCartProducts: React.Dispatch<React.SetStateAction<ProductData[]>>
   isSideMenuOpen: boolean
+  order: Order[]
+  setOrder: React.Dispatch<React.SetStateAction<Order[]>>
   openSideMenu: () => void
   closeSideMenu: () => void
 }
@@ -53,6 +53,10 @@ export const ShoppingCartContext = createContext<ShoppingCartContextType>({
     undefined
   },
   isSideMenuOpen: false,
+  order: [],
+  setOrder: () => {
+    undefined
+  },
   openSideMenu: () => {
     undefined
   },
@@ -66,11 +70,10 @@ export const ShoppingCartProvider: React.FC<ShoppingCartProviderProps> = ({
 }) => {
   const [count, setCount] = useState(0)
   const [isProductDetailOpen, setIsProductDetailOpen] = useState(false)
-  const [productToShow, setProductToShow] = useState<CardProps['data'] | null>(
-    null
-  )
-  const [cartProducts, setCartProducts] = useState<CardProps['data'][]>([])
+  const [productToShow, setProductToShow] = useState<ProductData | null>(null)
+  const [cartProducts, setCartProducts] = useState<ProductData[]>([])
   const [isSideMenuOpen, setIsSideMenuOpen] = useState(false)
+  const [order, setOrder] = useState<Order[]>([])
 
   const openProductDetail = () => {
     setIsProductDetailOpen(true)
@@ -101,6 +104,8 @@ export const ShoppingCartProvider: React.FC<ShoppingCartProviderProps> = ({
         cartProducts,
         setCartProducts,
         isSideMenuOpen,
+        order,
+        setOrder,
         openSideMenu,
         closeSideMenu,
       }}
