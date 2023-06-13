@@ -6,8 +6,16 @@ import { Link } from 'react-router-dom'
 
 const MyOrder = () => {
   const { order } = useShoppingCart()
+  const currentPath = window.location.pathname
+  let index: string | number = currentPath.substring(
+    currentPath.lastIndexOf('/') + 1
+  )
 
-  const lastOrder = order?.slice(-1)[0]
+  if (index === 'last') {
+    index = order?.length - 1
+  } else {
+    index = parseInt(index, 10)
+  }
 
   return (
     <Layout>
@@ -18,7 +26,7 @@ const MyOrder = () => {
         <h1>My Order</h1>
       </div>
       <div className="flex flex-col w-80">
-        {lastOrder?.products?.map((product) => {
+        {order?.[index]?.products?.map((product) => {
           const { id, images, price, title } = product
           return (
             <OrderCard

@@ -18,7 +18,6 @@ export interface OrderCardProps extends ProductData {
 }
 
 export interface Order {
-  id?: number
   date?: number
   products?: ProductData[]
   totalProducts: number
