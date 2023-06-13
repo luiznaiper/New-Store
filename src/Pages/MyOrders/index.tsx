@@ -1,7 +1,25 @@
+import { Link } from 'react-router-dom'
 import Layout from '../../Components/Layout'
+import OrdersCard from '../../Components/OrdersCard'
+import { useShoppingCart } from '../../hooks/useShoppingCart'
 
 const MyOrders = () => {
-  return <Layout>My Orders</Layout>
+  const { order } = useShoppingCart()
+  return (
+    <Layout>
+      <div className="flex justify-center items-center relative w-80">
+        <h1>My Orders</h1>
+      </div>
+      {order.map((order, index) => {
+        const { id, totalProducts, totalPrice } = order
+        return (
+          <Link key={index} to={`/my-orders/${id}`}>
+            <OrdersCard totalProducts={totalProducts} totalPrice={totalPrice} />
+          </Link>
+        )
+      })}
+    </Layout>
+  )
 }
 
 export default MyOrders
