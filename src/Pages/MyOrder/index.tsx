@@ -2,20 +2,21 @@ import { ChevronLeftIcon } from '@heroicons/react/20/solid'
 import Layout from '../../Components/Layout'
 import OrderCard from '../../Components/OrderCard'
 import { useShoppingCart } from '../../hooks/useShoppingCart'
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 
 const MyOrder = () => {
   const { order } = useShoppingCart()
-  const currentPath = window.location.pathname
-  let index: string | number = currentPath.substring(
-    currentPath.lastIndexOf('/') + 1
-  )
+  const { index: indexPath } = useParams<{ index?: string }>()
 
-  if (index === 'last') {
-    index = order?.length - 1
-  } else {
-    index = parseInt(index, 10)
+  const getIndex = () => {
+    if (indexPath === 'last') {
+      return order ? order.length - 1 : 0
+    }
+    const parsedIndex = parseInt(indexPath || '0', 10)
+    return isNaN(parsedIndex) ? 0 : parsedIndex
   }
+
+  const index = getIndex()
 
   return (
     <Layout>
