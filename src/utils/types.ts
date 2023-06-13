@@ -14,7 +14,7 @@ export interface CardProps {
 }
 
 export interface OrderCardProps extends ProductData {
-  handleDelete: (id: number) => void
+  handleDelete?: (id: number) => void
 }
 
 export interface Order {
