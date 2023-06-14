@@ -8,6 +8,8 @@ type ShoppingCartProviderProps = {
 type ShoppingCartContextType = {
   items: Array<ProductData>
   setItems: React.Dispatch<React.SetStateAction<ProductData[]>>
+  search: string
+  setSearch: React.Dispatch<React.SetStateAction<string>>
   count: number
   setCount: React.Dispatch<React.SetStateAction<number>>
   isProductDetailOpen: boolean
@@ -27,6 +29,8 @@ type ShoppingCartContextType = {
 export const ShoppingCartContext = createContext<ShoppingCartContextType>({
   items: [],
   setItems: () => undefined,
+  search: '',
+  setSearch: () => undefined,
   count: 0,
   setCount: () => undefined,
   isProductDetailOpen: false,
@@ -65,6 +69,7 @@ export const ShoppingCartProvider: React.FC<ShoppingCartProviderProps> = ({
     fetchData()
   }, [])
   const [items, setItems] = useState<ProductData[]>([])
+  const [search, setSearch] = useState('')
   const [count, setCount] = useState(0)
   const [isProductDetailOpen, setIsProductDetailOpen] = useState(false)
   const [productToShow, setProductToShow] = useState<ProductData | null>(null)
@@ -93,6 +98,8 @@ export const ShoppingCartProvider: React.FC<ShoppingCartProviderProps> = ({
       value={{
         items,
         setItems,
+        search,
+        setSearch,
         count,
         setCount,
         isProductDetailOpen,
