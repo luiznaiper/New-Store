@@ -82,8 +82,11 @@ export const ShoppingCartProvider: React.FC<ShoppingCartProviderProps> = ({
   const [isSideMenuOpen, setIsSideMenuOpen] = useState(false)
   const [order, setOrder] = useState<Order[]>([])
 
-  const filteredItemsByTitle = (items, search) => {
-    return items?.filter((item) =>
+  const filteredItemsByTitle = (
+    items: ProductData[] | undefined,
+    search: string
+  ): ProductData[] => {
+    return (items || []).filter((item: ProductData) =>
       item.title.toLowerCase().includes(search.toLowerCase())
     )
   }
