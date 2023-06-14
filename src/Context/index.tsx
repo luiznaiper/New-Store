@@ -8,6 +8,8 @@ type ShoppingCartProviderProps = {
 type ShoppingCartContextType = {
   items: Array<ProductData>
   setItems: React.Dispatch<React.SetStateAction<ProductData[]>>
+  filteredItems: Array<ProductData>
+  setfilteredItems: React.Dispatch<React.SetStateAction<ProductData[]>>
   search: string
   setSearch: React.Dispatch<React.SetStateAction<string>>
   count: number
@@ -29,6 +31,8 @@ type ShoppingCartContextType = {
 export const ShoppingCartContext = createContext<ShoppingCartContextType>({
   items: [],
   setItems: () => undefined,
+  filteredItems: [],
+  setfilteredItems: () => undefined,
   search: '',
   setSearch: () => undefined,
   count: 0,
@@ -69,6 +73,7 @@ export const ShoppingCartProvider: React.FC<ShoppingCartProviderProps> = ({
     fetchData()
   }, [])
   const [items, setItems] = useState<ProductData[]>([])
+  const [filteredItems, setfilteredItems] = useState<ProductData[]>([])
   const [search, setSearch] = useState('')
   const [count, setCount] = useState(0)
   const [isProductDetailOpen, setIsProductDetailOpen] = useState(false)
@@ -76,6 +81,20 @@ export const ShoppingCartProvider: React.FC<ShoppingCartProviderProps> = ({
   const [cartProducts, setCartProducts] = useState<ProductData[]>([])
   const [isSideMenuOpen, setIsSideMenuOpen] = useState(false)
   const [order, setOrder] = useState<Order[]>([])
+
+  const filteredItemsByTitle = (items, search) => {
+    return items?.filter((item) =>
+      item.title.toLowerCase().includes(search.toLowerCase())
+    )
+  }
+
+  useEffect(() => {
+    if (search) {
+      setfilteredItems(filteredItemsByTitle(items, search))
+    }
+  }, [items, search])
+
+  console.log(filteredItems)
 
   const openProductDetail = () => {
     setIsProductDetailOpen(true)
@@ -98,6 +117,8 @@ export const ShoppingCartProvider: React.FC<ShoppingCartProviderProps> = ({
       value={{
         items,
         setItems,
+        filteredItems,
+        setfilteredItems,
         search,
         setSearch,
         count,

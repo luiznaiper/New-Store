@@ -4,8 +4,24 @@ import ProductDetail from '../../Components/ProductDetail'
 import { useShoppingCart } from '../../hooks/useShoppingCart'
 
 const Home = () => {
-  const { items, search, setSearch } = useShoppingCart()
-  console.log(search)
+  const { items, filteredItems, search, setSearch } = useShoppingCart()
+  const renderView = () => {
+    if (search?.length > 0) {
+      if (filteredItems.length > 0) {
+        return filteredItems?.map((item) => {
+          const { id } = item
+          return <Card key={id} data={item} />
+        })
+      } else {
+        return <div>No products found, try another</div>
+      }
+    } else {
+      return items?.map((item) => {
+        const { id } = item
+        return <Card key={id} data={item} />
+      })
+    }
+  }
 
   return (
     <Layout>
@@ -19,10 +35,7 @@ const Home = () => {
         onChange={(e) => setSearch(e.target.value)}
       />
       <div className="grid gap-4 grid-cols-4 w-full max-w-screen-lg">
-        {items?.map((item) => {
-          const { id } = item
-          return <Card key={id} data={item} />
-        })}
+        {renderView()}
       </div>
       <ProductDetail />
     </Layout>
