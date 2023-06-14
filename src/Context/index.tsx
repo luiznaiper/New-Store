@@ -12,6 +12,8 @@ type ShoppingCartContextType = {
   setfilteredItems: React.Dispatch<React.SetStateAction<ProductData[]>>
   search: string
   setSearch: React.Dispatch<React.SetStateAction<string>>
+  searchCategory: string
+  setSearchcategory: React.Dispatch<React.SetStateAction<string>>
   count: number
   setCount: React.Dispatch<React.SetStateAction<number>>
   isProductDetailOpen: boolean
@@ -35,6 +37,8 @@ export const ShoppingCartContext = createContext<ShoppingCartContextType>({
   setfilteredItems: () => undefined,
   search: '',
   setSearch: () => undefined,
+  searchCategory: '',
+  setSearchcategory: () => undefined,
   count: 0,
   setCount: () => undefined,
   isProductDetailOpen: false,
@@ -75,6 +79,7 @@ export const ShoppingCartProvider: React.FC<ShoppingCartProviderProps> = ({
   const [items, setItems] = useState<ProductData[]>([])
   const [filteredItems, setfilteredItems] = useState<ProductData[]>([])
   const [search, setSearch] = useState('')
+  const [searchCategory, setSearchcategory] = useState('')
   const [count, setCount] = useState(0)
   const [isProductDetailOpen, setIsProductDetailOpen] = useState(false)
   const [productToShow, setProductToShow] = useState<ProductData | null>(null)
@@ -91,13 +96,50 @@ export const ShoppingCartProvider: React.FC<ShoppingCartProviderProps> = ({
     )
   }
 
-  useEffect(() => {
-    if (search) {
-      setfilteredItems(filteredItemsByTitle(items, search))
-    }
-  }, [items, search])
+  const filteredItemsByCategory = (
+    items: ProductData[] | undefined,
+    searchCategory: string
+  ): ProductData[] => {
+    return (items || []).filter((item: ProductData) =>
+      item?.category?.name?.includes(searchCategory)
+    )
+  }
 
-  console.log(filteredItems)
+  const filteredBy = (items, searchType, search, searchCategory) => {
+    if (searchType === 'BY_TITLE_AND_CATEGORY') {
+      return filteredItemsByCategory(items, searchCategory).filter((item) =>
+        item.title.toLowerCase().includes(search.toLowerCase())
+      )
+    }
+    if (searchType === 'BY_TITLE') {
+      return filteredItemsByTitle(items, search)
+    }
+    if (searchType === 'BY_CATEGORY') {
+      return filteredItemsByCategory(items, searchCategory)
+    }
+    if (!searchType) {
+      return items
+    }
+  }
+
+  useEffect(() => {
+    if (search && searchCategory) {
+      setfilteredItems(
+        filteredBy('BY_TITLE_AND_CATEGORY', items, search, searchCategory)
+      )
+    }
+    if (search && !searchCategory) {
+      setfilteredItems(filteredBy('BY_TITLE', items, search, searchCategory))
+    }
+    if (!search && searchCategory) {
+      setfilteredItems(filteredBy('BY_CATEGORY', items, search, searchCategory))
+    }
+    if (!search && !searchCategory) {
+      setfilteredItems(filteredBy(null, items, search, searchCategory))
+    }
+  }, [items, search, searchCategory, filteredBy])
+
+  console.log(items)
 
   const openProductDetail = () => {
     setIsProductDetailOpen(true)
@@ -124,6 +166,8 @@ export const ShoppingCartProvider: React.FC<ShoppingCartProviderProps> = ({
         setfilteredItems,
         search,
         setSearch,
+        searchCategory,
+        setSearchcategory,
         count,
         setCount,
         isProductDetailOpen,
