@@ -1,4 +1,4 @@
-import { ReactNode, createContext, useState } from 'react'
+import { ReactNode, createContext, useEffect, useState } from 'react'
 import { Order, ProductData } from '../utils/types'
 
 type ShoppingCartProviderProps = {
@@ -6,6 +6,8 @@ type ShoppingCartProviderProps = {
 }
 
 type ShoppingCartContextType = {
+  items: Array<ProductData>
+  setItems: React.Dispatch<React.SetStateAction<ProductData[]>>
   count: number
   setCount: React.Dispatch<React.SetStateAction<number>>
   isProductDetailOpen: boolean
@@ -23,18 +25,14 @@ type ShoppingCartContextType = {
 }
 
 export const ShoppingCartContext = createContext<ShoppingCartContextType>({
+  items: [],
+  setItems: () => undefined,
   count: 0,
-  setCount: () => {
-    undefined
-  },
+  setCount: () => undefined,
   isProductDetailOpen: false,
 
-  openProductDetail: () => {
-    undefined
-  },
-  closeProductDetail: () => {
-    undefined
-  },
+  openProductDetail: () => undefined,
+  closeProductDetail: () => undefined,
   productToShow: {
     id: 0,
     title: '',
@@ -45,29 +43,28 @@ export const ShoppingCartContext = createContext<ShoppingCartContextType>({
     },
     description: '',
   },
-  setProductToShow: () => {
-    undefined
-  },
+  setProductToShow: () => undefined,
   cartProducts: [],
-  setCartProducts: () => {
-    undefined
-  },
+  setCartProducts: () => undefined,
   isSideMenuOpen: false,
   order: [],
-  setOrder: () => {
-    undefined
-  },
-  openSideMenu: () => {
-    undefined
-  },
-  closeSideMenu: () => {
-    undefined
-  },
+  setOrder: () => undefined,
+  openSideMenu: () => undefined,
+  closeSideMenu: () => undefined,
 })
 
 export const ShoppingCartProvider: React.FC<ShoppingCartProviderProps> = ({
   children,
 }) => {
+  useEffect(() => {
+    const fetchData = async () => {
+      const resp = await fetch('https://api.escuelajs.co/api/v1/products')
+      const data = await resp.json()
+      setItems(data)
+    }
+    fetchData()
+  }, [])
+  const [items, setItems] = useState<ProductData[]>([])
   const [count, setCount] = useState(0)
   const [isProductDetailOpen, setIsProductDetailOpen] = useState(false)
   const [productToShow, setProductToShow] = useState<ProductData | null>(null)
@@ -94,6 +91,8 @@ export const ShoppingCartProvider: React.FC<ShoppingCartProviderProps> = ({
   return (
     <ShoppingCartContext.Provider
       value={{
+        items,
+        setItems,
         count,
         setCount,
         isProductDetailOpen,

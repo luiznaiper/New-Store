@@ -1,21 +1,10 @@
-import { useEffect, useState } from 'react'
 import Card from '../../Components/Card'
 import Layout from '../../Components/Layout'
 import ProductDetail from '../../Components/ProductDetail'
+import { useShoppingCart } from '../../hooks/useShoppingCart'
 
 const Home = () => {
-  const [items, setItems] = useState([])
-
-  const url = 'https://api.escuelajs.co/api/v1/products'
-  useEffect(() => {
-    const fetchData = async () => {
-      const resp = await fetch(url)
-      const data = await resp.json()
-      setItems(data)
-    }
-    fetchData()
-  }, [])
-
+  const { items } = useShoppingCart()
   return (
     <Layout>
       Home
