@@ -10,8 +10,8 @@ type ShoppingCartContextType = {
   setItems: React.Dispatch<React.SetStateAction<ProductData[]>>
   filteredItems: Array<ProductData>
   setfilteredItems: React.Dispatch<React.SetStateAction<ProductData[]>>
-  search: string
-  setSearch: React.Dispatch<React.SetStateAction<string>>
+  searchProduct: string
+  setSearchProduct: React.Dispatch<React.SetStateAction<string>>
   searchCategory: string
   setSearchcategory: React.Dispatch<React.SetStateAction<string>>
   count: number
@@ -35,8 +35,8 @@ export const ShoppingCartContext = createContext<ShoppingCartContextType>({
   setItems: () => undefined,
   filteredItems: [],
   setfilteredItems: () => undefined,
-  search: '',
-  setSearch: () => undefined,
+  searchProduct: '',
+  setSearchProduct: () => undefined,
   searchCategory: '',
   setSearchcategory: () => undefined,
   count: 0,
@@ -78,7 +78,7 @@ export const ShoppingCartProvider: React.FC<ShoppingCartProviderProps> = ({
   }, [])
   const [items, setItems] = useState<ProductData[]>([])
   const [filteredItems, setfilteredItems] = useState<ProductData[]>([])
-  const [search, setSearch] = useState('')
+  const [searchProduct, setSearchProduct] = useState('')
   const [searchCategory, setSearchcategory] = useState('')
   const [count, setCount] = useState(0)
   const [isProductDetailOpen, setIsProductDetailOpen] = useState(false)
@@ -89,10 +89,10 @@ export const ShoppingCartProvider: React.FC<ShoppingCartProviderProps> = ({
 
   const filteredItemsByTitle = (
     items: ProductData[] | undefined,
-    search: string
+    searchProduct: string
   ): ProductData[] => {
     return (items || []).filter((item: ProductData) =>
-      item.title.toLowerCase().includes(search.toLowerCase())
+      item.title.toLowerCase().includes(searchProduct.toLowerCase())
     )
   }
 
@@ -105,14 +105,14 @@ export const ShoppingCartProvider: React.FC<ShoppingCartProviderProps> = ({
     )
   }
 
-  const filteredBy = (items, searchType, search, searchCategory) => {
+  const filteredBy = (items, searchType, searchProduct, searchCategory) => {
     if (searchType === 'BY_TITLE_AND_CATEGORY') {
       return filteredItemsByCategory(items, searchCategory).filter((item) =>
-        item.title.toLowerCase().includes(search.toLowerCase())
+        item.title.toLowerCase().includes(searchProduct.toLowerCase())
       )
     }
     if (searchType === 'BY_TITLE') {
-      return filteredItemsByTitle(items, search)
+      return filteredItemsByTitle(items, searchProduct)
     }
     if (searchType === 'BY_CATEGORY') {
       return filteredItemsByCategory(items, searchCategory)
@@ -123,21 +123,30 @@ export const ShoppingCartProvider: React.FC<ShoppingCartProviderProps> = ({
   }
 
   useEffect(() => {
-    if (search && searchCategory) {
+    if (searchProduct && searchCategory) {
       setfilteredItems(
-        filteredBy('BY_TITLE_AND_CATEGORY', items, search, searchCategory)
+        filteredBy(
+          'BY_TITLE_AND_CATEGORY',
+          items,
+          searchProduct,
+          searchCategory
+        )
       )
     }
-    if (search && !searchCategory) {
-      setfilteredItems(filteredBy('BY_TITLE', items, search, searchCategory))
+    if (searchProduct && !searchCategory) {
+      setfilteredItems(
+        filteredBy('BY_TITLE', items, searchProduct, searchCategory)
+      )
     }
-    if (!search && searchCategory) {
-      setfilteredItems(filteredBy('BY_CATEGORY', items, search, searchCategory))
+    if (!searchProduct && searchCategory) {
+      setfilteredItems(
+        filteredBy('BY_CATEGORY', items, searchProduct, searchCategory)
+      )
     }
-    if (!search && !searchCategory) {
-      setfilteredItems(filteredBy(null, items, search, searchCategory))
+    if (!searchProduct && !searchCategory) {
+      setfilteredItems(filteredBy(null, items, searchProduct, searchCategory))
     }
-  }, [items, search, searchCategory, filteredBy])
+  }, [items, searchProduct, searchCategory, filteredBy])
 
   console.log(items)
 
@@ -164,8 +173,8 @@ export const ShoppingCartProvider: React.FC<ShoppingCartProviderProps> = ({
         setItems,
         filteredItems,
         setfilteredItems,
-        search,
-        setSearch,
+        searchProduct,
+        setSearchProduct,
         searchCategory,
         setSearchcategory,
         count,

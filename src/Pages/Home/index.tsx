@@ -4,9 +4,10 @@ import ProductDetail from '../../Components/ProductDetail'
 import { useShoppingCart } from '../../hooks/useShoppingCart'
 
 const Home = () => {
-  const { items, filteredItems, search, setSearch } = useShoppingCart()
+  const { items, filteredItems, searchProduct, setSearchProduct } =
+    useShoppingCart()
   const renderView = () => {
-    if (search?.length > 0) {
+    if (searchProduct?.length > 0) {
       if (filteredItems.length > 0) {
         return filteredItems?.map((item) => {
           const { id } = item
@@ -30,9 +31,9 @@ const Home = () => {
       </div>
       <input
         type="text"
-        placeholder="Search a product"
+        placeholder="searchProduct a product"
         className="rounded-lg border border-black w-80 p-4 mb-4 focus:outline-none"
-        onChange={(e) => setSearch(e.target.value)}
+        onChange={(e) => setSearchProduct(e.target.value)}
       />
       <div className="grid gap-4 grid-cols-4 w-full max-w-screen-lg">
         {renderView()}
