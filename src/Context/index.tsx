@@ -87,68 +87,25 @@ export const ShoppingCartProvider: React.FC<ShoppingCartProviderProps> = ({
   const [isSideMenuOpen, setIsSideMenuOpen] = useState(false)
   const [order, setOrder] = useState<Order[]>([])
 
-  const filteredItemsByTitle = (
-    items: ProductData[] | undefined,
-    searchProduct: string
-  ): ProductData[] => {
-    return (items || []).filter((item: ProductData) =>
-      item.title.toLowerCase().includes(searchProduct.toLowerCase())
-    )
-  }
+  useEffect(() => {
+    let result = items || []
 
-  const filteredItemsByCategory = (
-    items: ProductData[] | undefined,
-    searchCategory: string
-  ): ProductData[] => {
-    return (items || []).filter((item: ProductData) =>
-      item?.category?.name?.includes(searchCategory)
-    )
-  }
-
-  const filteredBy = (items, searchType, searchProduct, searchCategory) => {
-    if (searchType === 'BY_TITLE_AND_CATEGORY') {
-      return filteredItemsByCategory(items, searchCategory).filter((item) =>
+    if (searchProduct) {
+      result = result.filter((item: ProductData) =>
         item.title.toLowerCase().includes(searchProduct.toLowerCase())
       )
     }
-    if (searchType === 'BY_TITLE') {
-      return filteredItemsByTitle(items, searchProduct)
-    }
-    if (searchType === 'BY_CATEGORY') {
-      return filteredItemsByCategory(items, searchCategory)
-    }
-    if (!searchType) {
-      return items
-    }
-  }
 
-  useEffect(() => {
-    if (searchProduct && searchCategory) {
-      setfilteredItems(
-        filteredBy(
-          'BY_TITLE_AND_CATEGORY',
-          items,
-          searchProduct,
-          searchCategory
-        )
+    if (searchCategory) {
+      result = result.filter((item: ProductData) =>
+        item?.category?.name
+          ?.toLowerCase()
+          .includes(searchCategory.toLowerCase())
       )
     }
-    if (searchProduct && !searchCategory) {
-      setfilteredItems(
-        filteredBy('BY_TITLE', items, searchProduct, searchCategory)
-      )
-    }
-    if (!searchProduct && searchCategory) {
-      setfilteredItems(
-        filteredBy('BY_CATEGORY', items, searchProduct, searchCategory)
-      )
-    }
-    if (!searchProduct && !searchCategory) {
-      setfilteredItems(filteredBy(null, items, searchProduct, searchCategory))
-    }
-  }, [items, searchProduct, searchCategory, filteredBy])
 
-  console.log(items)
+    setfilteredItems(result)
+  }, [items, searchProduct, searchCategory])
 
   const openProductDetail = () => {
     setIsProductDetailOpen(true)

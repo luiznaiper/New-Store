@@ -10,7 +10,7 @@ const NavBar = () => {
     <nav className="w-full top-0 flex justify-between items-center fixed z-10 py-5 px-8 text-sm font-light">
       <ul className="flex items-center gap-3">
         <li className="font-semibold text-lg">
-          <NavLink to="/">
+          <NavLink to="/" onClick={() => setSearchcategory('')}>
             Luis <span className="text-orange-400">Olivárez</span>
           </NavLink>
         </li>
@@ -18,6 +18,7 @@ const NavBar = () => {
           <NavLink
             to="/"
             className={({ isActive }) => (isActive ? activeStyle : undefined)}
+            onClick={() => setSearchcategory('')}
           >
             All
           </NavLink>

@@ -4,23 +4,15 @@ import ProductDetail from '../../Components/ProductDetail'
 import { useShoppingCart } from '../../hooks/useShoppingCart'
 
 const Home = () => {
-  const { items, filteredItems, searchProduct, setSearchProduct } =
-    useShoppingCart()
+  const { filteredItems, setSearchProduct } = useShoppingCart()
   const renderView = () => {
-    if (searchProduct?.length > 0) {
-      if (filteredItems.length > 0) {
-        return filteredItems?.map((item) => {
-          const { id } = item
-          return <Card key={id} data={item} />
-        })
-      } else {
-        return <div>No products found, try another</div>
-      }
-    } else {
-      return items?.map((item) => {
+    if (filteredItems?.length > 0) {
+      return filteredItems?.map((item) => {
         const { id } = item
         return <Card key={id} data={item} />
       })
+    } else {
+      return <div>No products found, try another</div>
     }
   }
 
