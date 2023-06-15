@@ -5,8 +5,6 @@ import { CardProps } from '../../utils/types'
 const Card: React.FC<CardProps> = ({ data }) => {
   const { id, title, price, images, category } = data
   const {
-    count,
-    setCount,
     openProductDetail,
     closeProductDetail,
     setProductToShow,
@@ -26,7 +24,6 @@ const Card: React.FC<CardProps> = ({ data }) => {
   ): void => {
     event.stopPropagation()
     setCartProducts([...cartProducts, productData])
-    setCount(count + 1)
     openSideMenu()
     closeProductDetail()
   }

@@ -14,8 +14,6 @@ type ShoppingCartContextType = {
   setSearchProduct: React.Dispatch<React.SetStateAction<string>>
   searchCategory: string
   setSearchcategory: React.Dispatch<React.SetStateAction<string>>
-  count: number
-  setCount: React.Dispatch<React.SetStateAction<number>>
   isProductDetailOpen: boolean
   openProductDetail: () => void
   closeProductDetail: () => void
@@ -39,8 +37,6 @@ export const ShoppingCartContext = createContext<ShoppingCartContextType>({
   setSearchProduct: () => undefined,
   searchCategory: '',
   setSearchcategory: () => undefined,
-  count: 0,
-  setCount: () => undefined,
   isProductDetailOpen: false,
 
   openProductDetail: () => undefined,
@@ -80,7 +76,6 @@ export const ShoppingCartProvider: React.FC<ShoppingCartProviderProps> = ({
   const [filteredItems, setfilteredItems] = useState<ProductData[]>([])
   const [searchProduct, setSearchProduct] = useState('')
   const [searchCategory, setSearchcategory] = useState('')
-  const [count, setCount] = useState(0)
   const [isProductDetailOpen, setIsProductDetailOpen] = useState(false)
   const [productToShow, setProductToShow] = useState<ProductData | null>(null)
   const [cartProducts, setCartProducts] = useState<ProductData[]>([])
@@ -134,8 +129,6 @@ export const ShoppingCartProvider: React.FC<ShoppingCartProviderProps> = ({
         setSearchProduct,
         searchCategory,
         setSearchcategory,
-        count,
-        setCount,
         isProductDetailOpen,
         openProductDetail,
         closeProductDetail,
