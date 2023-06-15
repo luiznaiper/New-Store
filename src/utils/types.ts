@@ -1,3 +1,5 @@
+import { Dispatch, SetStateAction } from 'react'
+
 export interface ProductData {
   id: number
   title: string
@@ -15,6 +17,10 @@ export interface CardProps {
 
 export interface OrderCardProps extends ProductData {
   handleDelete?: (id: number) => void
+  productQuantities: { [productId: number]: number }
+  setProductQuantities: Dispatch<
+    SetStateAction<{ [productId: number]: number }>
+  >
 }
 
 export interface Order {
