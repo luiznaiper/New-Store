@@ -1,4 +1,6 @@
+import React from 'react'
 import { XMarkIcon } from '@heroicons/react/20/solid'
+import { useShoppingCart } from '../../hooks/useShoppingCart'
 import { OrderCardProps } from '../../utils/types'
 
 const OrderCard: React.FC<OrderCardProps> = ({
@@ -8,6 +10,20 @@ const OrderCard: React.FC<OrderCardProps> = ({
   price,
   handleDelete,
 }) => {
+  const { productQuantities, setProductQuantities } = useShoppingCart()
+
+  const handleIncreaseQuantity = () => {
+    const updatedQuantities = { ...productQuantities }
+    updatedQuantities[id] = (updatedQuantities[id] || 1) + 1
+    setProductQuantities(updatedQuantities)
+  }
+
+  const handleDecreaseQuantity = () => {
+    const updatedQuantities = { ...productQuantities }
+    updatedQuantities[id] = Math.max((updatedQuantities[id] || 1) - 1, 1)
+    setProductQuantities(updatedQuantities)
+  }
+
   let renderXMarkIcon
   if (handleDelete) {
     renderXMarkIcon = (
@@ -17,6 +33,7 @@ const OrderCard: React.FC<OrderCardProps> = ({
       />
     )
   }
+
   return (
     <div className="flex justify-between items-center mb-3">
       <div className="flex items-center gap-2">
@@ -30,7 +47,12 @@ const OrderCard: React.FC<OrderCardProps> = ({
         <p className="text-sm font-light">{title}</p>
       </div>
       <div className="flex items-center gap-2">
-        <p className="text-lg font-medium">{price}</p>
+        <p className="text-lg font-medium">${price}</p>
+        <div className="flex flex-col items-center">
+          <button onClick={handleDecreaseQuantity}>-</button>
+          <span className="px-2">{productQuantities[id] || 1}</span>
+          <button onClick={handleIncreaseQuantity}>+</button>
+        </div>
         {renderXMarkIcon}
       </div>
     </div>

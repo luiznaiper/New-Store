@@ -8,6 +8,10 @@ type ShoppingCartProviderProps = {
 type ShoppingCartContextType = {
   items: Array<ProductData>
   setItems: React.Dispatch<React.SetStateAction<ProductData[]>>
+  productQuantities: { [productId: number]: number }
+  setProductQuantities: React.Dispatch<
+    React.SetStateAction<{ [productId: number]: number }>
+  >
   filteredItems: Array<ProductData>
   setfilteredItems: React.Dispatch<React.SetStateAction<ProductData[]>>
   searchProduct: string
@@ -31,6 +35,8 @@ type ShoppingCartContextType = {
 export const ShoppingCartContext = createContext<ShoppingCartContextType>({
   items: [],
   setItems: () => undefined,
+  productQuantities: {},
+  setProductQuantities: () => undefined,
   filteredItems: [],
   setfilteredItems: () => undefined,
   searchProduct: '',
@@ -73,6 +79,7 @@ export const ShoppingCartProvider: React.FC<ShoppingCartProviderProps> = ({
     fetchData()
   }, [])
   const [items, setItems] = useState<ProductData[]>([])
+  const [productQuantities, setProductQuantities] = useState({})
   const [filteredItems, setfilteredItems] = useState<ProductData[]>([])
   const [searchProduct, setSearchProduct] = useState('')
   const [searchCategory, setSearchcategory] = useState('')
@@ -125,6 +132,8 @@ export const ShoppingCartProvider: React.FC<ShoppingCartProviderProps> = ({
         setItems,
         filteredItems,
         setfilteredItems,
+        productQuantities,
+        setProductQuantities,
         searchProduct,
         setSearchProduct,
         searchCategory,

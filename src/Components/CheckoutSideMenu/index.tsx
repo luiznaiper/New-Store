@@ -10,6 +10,8 @@ const CheckoutSideMenu = () => {
   const {
     isSideMenuOpen,
     closeSideMenu,
+    productQuantities,
+    setProductQuantities,
     cartProducts,
     setCartProducts,
     order,
@@ -27,7 +29,7 @@ const CheckoutSideMenu = () => {
       date: Date.now(),
       products: cartProducts,
       totalProducts: cartProducts.length,
-      totalPrice: totalPrice(cartProducts),
+      totalPrice: totalPrice(cartProducts, productQuantities),
     }
     setOrder([...order, orderToAdd])
     setCartProducts([])
@@ -58,6 +60,8 @@ const CheckoutSideMenu = () => {
               price={price}
               title={title}
               handleDelete={handleDelete}
+              productQuantities={productQuantities}
+              setProductQuantities={setProductQuantities}
             />
           )
         })}
@@ -66,7 +70,7 @@ const CheckoutSideMenu = () => {
         <p className="flex justify-between items-center mb-2">
           <span className="font-light">Total:</span>
           <span className="font-medium text-2xl">
-            ${totalPrice(cartProducts)}
+            ${totalPrice(cartProducts, productQuantities)}
           </span>
         </p>
         <Link to="my-orders/last">
