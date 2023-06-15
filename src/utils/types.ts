@@ -17,10 +17,11 @@ export interface CardProps {
 
 export interface OrderCardProps extends ProductData {
   handleDelete?: (id: number) => void
-  productQuantities: { [productId: number]: number }
-  setProductQuantities: Dispatch<
+  productQuantities?: { [productId: number]: number }
+  setProductQuantities?: Dispatch<
     SetStateAction<{ [productId: number]: number }>
   >
+  quantity?: number
 }
 
 export interface Order {

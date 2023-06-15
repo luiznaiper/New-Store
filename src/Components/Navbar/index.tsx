@@ -3,7 +3,13 @@ import { useShoppingCart } from '../../hooks/useShoppingCart'
 import { ShoppingBagIcon } from '@heroicons/react/20/solid'
 
 const NavBar = () => {
-  const { cartProducts, setSearchcategory } = useShoppingCart()
+  const { cartProducts, productQuantities, setSearchcategory } =
+    useShoppingCart()
+  const totalItemsInCart = cartProducts.reduce(
+    (total, product) => total + (productQuantities[product.id] || 1),
+    0
+  )
+
   const activeStyle = 'underline underline-offset-4 text-orange-400'
 
   return (
@@ -104,7 +110,7 @@ const NavBar = () => {
         </li>
         <li className="flex items-center">
           <ShoppingBagIcon className="w-6 h-6 text-black" />{' '}
-          <span>{cartProducts.length}</span>
+          <span>{totalItemsInCart}</span>
         </li>
       </ul>
     </nav>

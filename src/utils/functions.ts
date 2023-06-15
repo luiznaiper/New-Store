@@ -1,8 +1,8 @@
-import { ProductData, OrderCardProps } from './types'
+import { ProductData } from './types'
 
 export const totalPrice = (
   products: ProductData[],
-  productQuantities: OrderCardProps['productQuantities']
+  productQuantities: { [productId: number]: number }
 ): number => {
   return products.reduce(
     (total, product) =>
