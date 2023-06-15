@@ -23,7 +23,7 @@ const Home = () => {
       </div>
       <input
         type="text"
-        placeholder="searchProduct a product"
+        placeholder="Search a product"
         className="rounded-lg border border-black w-80 p-4 mb-4 focus:outline-none"
         onChange={(e) => setSearchProduct(e.target.value)}
       />

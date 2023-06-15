@@ -13,6 +13,7 @@ const Card: React.FC<CardProps> = ({ data }) => {
     cartProducts,
     setCartProducts,
     openSideMenu,
+    closeSideMenu,
   } = useShoppingCart()
   const showProduct = (productDetail: CardProps['data']) => {
     openProductDetail()
@@ -28,6 +29,11 @@ const Card: React.FC<CardProps> = ({ data }) => {
     setCount(count + 1)
     openSideMenu()
     closeProductDetail()
+  }
+
+  const openProducts = () => {
+    closeSideMenu()
+    showProduct(data)
   }
 
   const renderIcon = (id: number) => {
@@ -54,11 +60,11 @@ const Card: React.FC<CardProps> = ({ data }) => {
   return (
     <div
       className="bg-white cursor-pointer w-56 h-60 rounded-lg"
-      onClick={() => showProduct(data)}
+      onClick={() => openProducts()}
     >
       <figure className="relative mb-2 w-full h-4/5">
         <span className="absolute bottom-0 left-0 bg-white/60 rounded-lg text-black text-xs m-2 px-3 py-0.5">
-          {category.name}
+          {category?.name}
         </span>
         <img
           className="w-full h-full object-cover rounded-lg"

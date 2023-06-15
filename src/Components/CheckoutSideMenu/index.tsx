@@ -14,6 +14,7 @@ const CheckoutSideMenu = () => {
     setCartProducts,
     order,
     setOrder,
+    setSearchProduct,
   } = useShoppingCart()
 
   const handleDelete = (id: number) => {
@@ -30,6 +31,7 @@ const CheckoutSideMenu = () => {
     }
     setOrder([...order, orderToAdd])
     setCartProducts([])
+    setSearchProduct('')
   }
 
   return (
